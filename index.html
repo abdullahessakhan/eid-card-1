@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Eid Card with Name</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #fdf6f0;
+    }
+
+    .canvas-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    canvas {
+      border: 1px solid #ccc;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 250px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .center-button {
+      background-color: #8B4513;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+<h2>✍️ اكتب اسمك و نجهزلك التهنئة</h2>
+
+<div class="canvas-container">
+  <canvas id="eidCanvas" width="768" height="1365"></canvas>
+  
+  <div class="overlay">
+    <input type="text" id="nameInput" placeholder="اسمك">
+    <br>
+    <button class="center-button" onclick="addName()">اضافة</button>
+  </div>
+</div>
+
+<script>
+  const canvas = document.getElementById("eidCanvas");
+  const ctx = canvas.getContext("2d");
+  const image = new Image();
+  image.src = "eid-image.png"; // Make sure your image is in the same folder
+
+  image.onload = () => {
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+  };
+
+  function addName() {
+    const name = document.getElementById("nameInput").value;
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // Reset image
+    ctx.font = "bold 40px Amiri, serif";
+    ctx.fillStyle = "#8B4513";
+    ctx.textAlign = "center";
+    ctx.fillText(name, canvas.width / 2, 1280); // You can adjust this Y position
+  }
+</script>
+<br><button onclick="downloadImage()">حفظ</button>
+<script>
+  function downloadImage() {
+    const link = document.createElement('a');
+    link.download = 'eid_mubarak_card.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  }
+</script>
+
+</body>
+</html>
